@@ -11,7 +11,7 @@ train_filenames = {'circle-1.mat', 'vertical-slow-2.mat', 'horizontal-slow-2.mat
 
 train_coef = U*x_model;
 
-[x_model, y_model] = train_model({'circle-4.mat', 'vertical-fast-1', 'horizontal-slow-3.mat'});
+[x_model, y_model] = train_model({'circle-4.mat', });
 
 test_coef = U*x_model;
 
