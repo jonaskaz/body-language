@@ -2,8 +2,7 @@
 %%% Read Data
 %%%
 
-
-function [accel_x, accel_y, accel_z] = Read_Data(filename)
+function [accel_x, accel_y, accel_z] = read_data(filename)
     % Read and parse data
     accel_struct = load(filename);
     accel_time = table2array(accel_struct.Acceleration);
