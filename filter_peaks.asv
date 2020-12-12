@@ -1,0 +1,30 @@
+%%%
+%%%  Filter out peaks above 100 in frequency domains
+%%%
+
+function [fft_vec] = filter_peaks(accel)
+
+    abs(fftshift(fft_vec))
+    
+    N = 73113;
+y_shift = fftshift(real(fft(y)));
+
+    % Implement low-pass filter
+    ind = (frequencies_shifted >= -Fs/2 & frequencies_shifted <= -Fs/4) | (frequencies_shifted >= Fs/4 & frequencies_shifted <= Fs/2);
+    y_filter = y_shift;
+    y_filter(ind) = y_shift(ind)/10;
+
+% Plot DFT of signal before and after processing
+figure;
+
+subplot(411);
+hold on;
+plot(y)
+title('Original Signal');
+
+subplot(412);
+hold on;
+stem(frequencies_shifted, y_shift)
+title('Original DFT');
+
+end
