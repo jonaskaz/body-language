@@ -3,17 +3,10 @@
 %%%
 
 clear all
-train_filenames = {'circle-1.mat', 'vertical-slow-2.mat', 'horizontal-slow-2.mat'};
 
-model = train_model(train_filenames);
+train_filenames = {'train/circ-1.mat', 'train/hori-1.mat', 'train/vib-1.mat'};
+test_model(train_filenames, {'test/vib-4.mat'})
 
-[U,S,V] = svd(model)
-
-train_coef = U*model;
-
-test = train_model({'circle-4.mat', 'vertical-slow-3.mat', 'horizontal-slow-1.mat'});
-
-test_coef = U*test;
 
 
 

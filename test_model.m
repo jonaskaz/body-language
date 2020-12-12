@@ -5,7 +5,9 @@
 function [id] = test_model(train_filenames, test_filename)
    
     train = train_model(train_filenames);
+    
     train_id = identify_motion(train_filenames);
+    
     [U,S,V] = svd(train);
     train_coef = U*train;
     
