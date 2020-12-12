@@ -2,22 +2,26 @@
 %%% Train the motion model
 %%%
 
-function [x_model, y_model] = train_model(filename_vec)
+function [model] = train_model(filenames)
     x_model = [];
     y_model = [];
-    for file = 1:length(filename_vec)
+    
+    for file = 1:length(filenames)
         [accel_x, accel_y, accel_z] = read_data(...
-                            strcat('data/', filename_vec{file}));
+                            strcat('data/', filenames{file}));
+                        
         accel_x = filter_time(accel_x);
         accel_y = filter_time(accel_y);
         accel_z = filter_time(accel_z);
         
-        [freq char_x] = find_fft(accel_x);
-        x_model(:,file) =  filter_freq(char_x);
+        [~, y_shift] = find_fft(accel_x);
+        x_model(:,file) =  filter_freq(y_shift);
 
-        char_y = find_fft(accel_y);
-        y_model(:,file) =  filter_freq(char_y);
-
+        [~, y_shift] = find_fft(accel_y);
+        y_model(:,file) =  filter_freq(y_shift);
     end
+    
+    model = [x_model; y_model];
+    
 end
 

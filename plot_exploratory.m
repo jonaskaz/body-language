@@ -3,15 +3,15 @@
 %%%  of inputted motion data
 %%%
 
-function plot_exploratory(files)
+function plot_exploratory(filenames)
     
     r = 3; % Specify number of rows in subplot
     c = 6; % Specify number of columns in subplot
 
-    for i = 1:length(files)
+    for i = 1:length(filenames)
 
         [accel_x, accel_y, accel_z] = read_data( ...
-            strcat('data/', files{i}));
+            strcat('data/', filenames{i}));
 
         accel_x = filter_time(accel_x);
         accel_y = filter_time(accel_y);

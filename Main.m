@@ -2,18 +2,18 @@
 %%% Body Language Translator
 %%%
 
-clear
+clear all
 train_filenames = {'circle-1.mat', 'vertical-slow-2.mat', 'horizontal-slow-2.mat'};
 
-[x_model, y_model] = train_model(train_filenames);
+model = train_model(train_filenames);
 
-[U,S,V] = svd(x_model)
+[U,S,V] = svd(model)
 
-train_coef = U*x_model;
+train_coef = U*model;
 
-[x_model, y_model] = train_model({'circle-4.mat', 'vertical-slow-3.mat', 'horizontal-slow-1.mat'});
+test = train_model({'circle-4.mat', 'vertical-slow-3.mat', 'horizontal-slow-1.mat'});
 
-test_coef = U*x_model;
+test_coef = U*test;
 
 
 
