@@ -12,4 +12,5 @@ function [avg, motions] = avg_fft(fft, id)
         ind = ~cellfun('isempty', ind); % Convert into logical array
         avg(:,i) = mean(fft(:,ind),2); % Average selected motion's FFTs
     end
+    
 end
