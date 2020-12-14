@@ -4,15 +4,20 @@
 
 function [id] = test_model(train_filenames, test_filename)
    
-    train = train_model(train_filenames);
+    train = train_model(train_filenames); % Perform FFT on training motions
+    
+    % Average 
+    
+    train_id = identify_motion(train_filenames);
+    
     [U,S,V] = svd(train);
     train_coef = U*train;
-    train_id = identify_motion(train_filenames)
     
     test = train_model(test_filename);
     test_coef = U*test; 
     
     RMSE = sqrt(mean((train_coef - test_coef).^2));
-    [min, ind] = min(RMSE);
+    [M, I] = min(RMSE);
+    id = train_id{I};
     
 end

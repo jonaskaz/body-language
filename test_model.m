@@ -4,7 +4,9 @@
 
 function [id] = test_model(train_filenames, test_filename)
    
-    train = train_model(train_filenames);
+    train = fft_model(train_filenames, 'train'); % Perform FFT on training motions
+    
+    % Average weights of each motion's FFT
     
     train_id = identify_motion(train_filenames);
     

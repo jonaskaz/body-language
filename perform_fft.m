@@ -1,15 +1,15 @@
 %%%
-%%% Train the motion model
+%%% Perform FFT on motion signal
 %%%
 
-function [model] = train_model(filenames)
+function [model] = perform_fft(filenames, type)
 
     x_model = [];
     y_model = [];
     
     for file = 1:length(filenames)
         [accel_x, accel_y, accel_z] = read_data(...
-                            strcat('data/', filenames{file}));
+                            strcat('data/', type, '/', filenames{file}));
                         
         accel_x = filter_time(accel_x);
         accel_y = filter_time(accel_y);

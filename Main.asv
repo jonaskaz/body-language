@@ -3,17 +3,25 @@
 %%%
 
 clear all
-train_filenames = {'circle-1.mat', 'vertical-slow-2.mat', 'horizontal-slow-2.mat'};
 
-model = train_model(train_filenames);
+% Read training data
+train_filenames = cellstr(ls('data/train/*.mat*')); % Store all filenames in training data folder
 
-[U,S,V] = svd(model)
+% Perform FFT on each training motion
+train_fft = perform_fft(train_filenames, 'train'); 
+train_id = id_motion(train_filenames); % Identify each motion based on the filename
 
-train_coef = U*model;
+% Average training data FFTs
+[train_avg, train_id] = avg_fft(train_fft, train_id);
 
-test = train_model({'circle-4.mat', 'vertical-slow-3.mat', 'horizontal-slow-1.mat'});
 
-test_coef = U*test;
+% Read testing data
+%cd ..
+%cd test
+%test_filenames = cellstr(ls('*.mat*'));
+
+% test_model(train_filenames, {'test/vib-4.mat'})
+
 
 
 
