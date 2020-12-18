@@ -1,8 +1,8 @@
 %%%
-%%% Perform SVD, identify motion, calculate accuracy
+%%% Perform SVD, identify motion, play sound
 %%%
 
-function [accuracy] = test_model(train_filenames, test_filenames)
+function [abc] = run_model(train_filenames, test_filenames)
    
     % Perform FFT on each training motion
     train_fft = perform_fft(train_filenames, 'train'); 
@@ -13,7 +13,9 @@ function [accuracy] = test_model(train_filenames, test_filenames)
 
     % Perform SVD on training motion FFTs to create motionspace
     [U,S,V] = svd(train_avg);
-
+    
+    
+    
     % Project train data onto motionspace then reduce dimensionality
     train_weights = U*train_avg;
     train_weights = train_weights(1:3,:);
@@ -28,20 +30,22 @@ function [accuracy] = test_model(train_filenames, test_filenames)
 
     
     % Use RMSE to compare and identify each test motion
-    predict_id = {}; % Initialize vector that will store motion predictions
-    accuracy = 0; % Initialize overall accuracy count
-
-    for i = 1:size(test_weights, 2)
-        RMSE = sqrt(mean((train_weights - test_weights(:,i)).^2));
-        [M, I] = min(RMSE);
-        predict_id{i} = train_id{I};
-        if isequal(predict_id{i}, test_id{i}) % Check if overall predict id
-            accuracy = accuracy + 1; 
-        end
-    end
-
-    % Calculate overall accuracy of identification
-    accuracy = accuracy/size(test_weights,2);
+ 
+    RMSE = sqrt(mean((train_weights - test_weights).^2));
+    [~, I] = min(RMSE);
     
+    if isequal(train_id{I}, 'vib')
+        [y, fs] = audioread('data/audio/attention.mp3');
+        sound(y, fs)
+    end
+    if isequal(train_id{I}, 'circ')
+        [y, fs] = audioread('data/audio/bus_stop.mp3');
+        sound(y, fs)
+    end
+    if isequal(train_id{I}, 'hori')
+        [y, fs] = audioread('data/audio/peanut.mp3');
+        sound(y, fs)
+    end
+   abc = train_id{I}
     
 end
